@@ -16,7 +16,7 @@ class GetRawData extends AsyncTask<String, Void, String> {
     private final CallBackWithAppsData mCallBack;
 
     interface CallBackWithAppsData {
-        void callBackWithAppsData(List<ApplicationData> listOfApps);
+        void callBackWithAppsData(List<AppData> listOfApps);
     }
 
     GetRawData(CallBackWithAppsData callBack) {
@@ -27,8 +27,7 @@ class GetRawData extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         GetAppsDataFromRawData getAppsDataFromRawData = new GetAppsDataFromRawData();
-        List<ApplicationData> arrList = getAppsDataFromRawData.parseRawDataToJson(s);
-        mCallBack.callBackWithAppsData(arrList);
+        mCallBack.callBackWithAppsData(getAppsDataFromRawData.parseRawDataToJson(s));
     }
 
     @Override

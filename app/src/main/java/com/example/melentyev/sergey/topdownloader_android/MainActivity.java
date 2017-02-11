@@ -7,13 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements GetRawData.CallBackWithAppsData{
     private final String TAG = "MainActivity";
+    private String currentSelection = FeedType.CURRENT_FREE_10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +21,12 @@ public class MainActivity extends AppCompatActivity implements GetRawData.CallBa
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        String url = new ConstructFinalString(FeedType.TOP_FREE_APPS, FeedType.SIZE_TEN).getUrl();
+        getData(FeedType.TOP_FREE_APPS, FeedType.SIZE_TEN);
+        this.currentSelection = FeedType.CURRENT_FREE_10;
+    }
+
+    void getData(String feed, String size) {
+        String url = new ConstructFinalString(feed, size).getUrl();
         GetRawData getRawData = new GetRawData(this);
         getRawData.execute(url);
     }
@@ -39,16 +42,36 @@ public class MainActivity extends AppCompatActivity implements GetRawData.CallBa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_menu:
-                // logic here
+                switch (this.currentSelection) {
+                    case "01":
+                        getData(FeedType.TOP_FREE_APPS, FeedType.SIZE_TEN);
+                        return true;
+                    case "02":
+                        getData(FeedType.TOP_FREE_APPS, FeedType.SIZE_TWENTY_FIVE);
+                        return true;
+                    case "03":
+                        getData(FeedType.TOP_PAID_APPS, FeedType.SIZE_TEN);
+                        return true;
+                    case "04":
+                        getData(FeedType.TOP_PAID_APPS, FeedType.SIZE_TWENTY_FIVE);
+                        return true;
+                }
                 return true;
-            case R.id.top_10_apps:
-                // logic here
+            case R.id.top_10_free_apps:
+                getData(FeedType.TOP_FREE_APPS, FeedType.SIZE_TEN);
+                this.currentSelection = FeedType.CURRENT_FREE_10;
                 return true;
-            case R.id.top_25_apps:
-                // logic here
+            case R.id.top_25_free_apps:
+                getData(FeedType.TOP_FREE_APPS, FeedType.SIZE_TWENTY_FIVE);
+                this.currentSelection = FeedType.CURRENT_FREE_25;
                 return true;
-            case R.id.show_paid:
-                // logic here
+            case R.id.top_10_paid_apps:
+                getData(FeedType.TOP_PAID_APPS, FeedType.SIZE_TEN);
+                this.currentSelection = FeedType.CURRENT_PAID_10;
+                return true;
+            case R.id.top_25_paid_apps:
+                getData(FeedType.TOP_PAID_APPS, FeedType.SIZE_TWENTY_FIVE);
+                this.currentSelection = FeedType.CURRENT_PAID_25;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -56,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements GetRawData.CallBa
     }
 
     @Override
-    public void callBackWithAppsData(List<ApplicationData> listOfApps) {
-        // logic here
+    public void callBackWithAppsData(List<AppData> listOfApps) {
+        //
     }
 }

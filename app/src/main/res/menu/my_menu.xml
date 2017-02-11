@@ -6,12 +6,12 @@
         android:icon="@android:drawable/ic_menu_rotate"
         app:showAsAction="ifRoom"
         android:title="Refresh list" />
-    <item android:title="Top 10 apps"
-        android:id="@+id/top_10_apps" />
-    <item android:title="Top 25 apps"
-        android:id="@+id/top_25_apps" />
-    <item android:title="Show paid"
-        android:enabled="true"
-        android:checkable="true"
-        android:id="@+id/show_paid" />
+    <item android:title="Top 10 free_apps"
+        android:id="@+id/top_10_free_apps" />
+    <item android:title="Top 25 free apps"
+        android:id="@+id/top_25_free_apps" />
+    <item android:title="Top 10 paid apps"
+        android:id="@+id/top_10_paid_apps" />
+    <item android:title="Top 25 paid apps"
+        android:id="@+id/top_25_paid_apps" />
 </menu>

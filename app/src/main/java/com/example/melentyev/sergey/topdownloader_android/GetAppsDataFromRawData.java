@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 class GetAppsDataFromRawData {
-    private List<ApplicationData> appsList;
+
+    private List<AppData> appsList;
 
     GetAppsDataFromRawData() {
         this.appsList = new ArrayList<>();
     }
 
-    List<ApplicationData> parseRawDataToJson (String rawStr) {
+    List<AppData> parseRawDataToJson (String rawStr) {
         if (rawStr.length() != 0) {
             try {
                 JSONObject jsonObj = new JSONObject(rawStr);
@@ -35,14 +36,16 @@ class GetAppsDataFromRawData {
 
                     JSONArray pngArray = jsonApp.getJSONArray("im:image");
                     String pngImage = pngArray.getJSONObject(pngArray.length()-1).getString("label");
-                    
+
+                    AppData eachApp = new AppData(labelCategory, pngImage, labelName, labelSummary);
+                    this.appsList.add(eachApp);
                 }
             } catch (JSONException e) {
                 // error logic here
             }
         }
-
-
-        return this.appsList;
+        if (this.appsList.size() != 0)
+            return this.appsList;
+        return null;
     }
 }
