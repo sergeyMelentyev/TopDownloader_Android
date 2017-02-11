@@ -2,16 +2,19 @@ package com.example.melentyev.sergey.topdownloader_android;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GetRawData.CallBackWithAppsData{
-    private final String TAG = "MainActivity";
     private String currentSelection = FeedType.CURRENT_FREE_10;
+    private RecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,12 @@ public class MainActivity extends AppCompatActivity implements GetRawData.CallBa
 
         getData(FeedType.TOP_FREE_APPS, FeedType.SIZE_TEN);
         this.currentSelection = FeedType.CURRENT_FREE_10;
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerViewAdapter = new RecyclerViewAdapter(this, new ArrayList<AppData>());
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     void getData(String feed, String size) {
@@ -80,6 +89,6 @@ public class MainActivity extends AppCompatActivity implements GetRawData.CallBa
 
     @Override
     public void callBackWithAppsData(List<AppData> listOfApps) {
-        //
+        recyclerViewAdapter.loadNewData(listOfApps);
     }
 }
