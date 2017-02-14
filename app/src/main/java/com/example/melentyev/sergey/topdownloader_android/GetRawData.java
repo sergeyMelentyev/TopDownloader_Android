@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class GetRawData extends AsyncTask<String, Void, String> {
-    private final String TAG = "GetRawData";
     private final CallBackWithAppsData mCallBack;
 
     interface CallBackWithAppsData {
